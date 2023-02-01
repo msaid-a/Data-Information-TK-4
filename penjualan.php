@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     
-    <title>Document</title>
+    <title>Pembelian</title>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
@@ -15,7 +15,7 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-      <a class="nav-item nav-link" href="/">Barang</a>
+      <a class="nav-item nav-link" href="/">Penjualan</a>
       <a class="nav-item nav-link" href="/pembelian.php">Pembelian</a>
       <a class="nav-item nav-link" href="/penjualan.php">Penjualan</a>
       <a class="nav-item nav-link" href="/hakAksess.php">HakAksess</a>
@@ -25,41 +25,42 @@
   </div>
 </nav>
     <div class="px-4 mt-5">
-        <h2 class="text-center mb-4">Barang</h2>
+        <h2 class="text-center mb-4">Pembelian</h2>
     <table class="table">
     <thead class="thead-dark">
     <tr>
-      <th scope="col">Id Barang</th>
+      <th scope="col">Id Penjualan</th>
       <th scope="col">Nama Barang</th>
-      <th scope="col">Keterangan</th>
-      <th scope="col">Stock</th>
-      <th scope="col">Pembeli Barang</th>
+      <th scope="col">Jumlah Penjualan</th>
+      <th scope="col">Harga Penjualan</th>
+      <th scope="col">Penjual Barang</th>
+      <th scope="col">Pelanggan</th>
     </tr>
   </thead>
   <tbody>
 
         <?php 
             require 'connection.php';
-            $result = mysqli_query($conn, "SELECT Barang.idBarang, Barang.NamaBarang, Barang.Keterangan, IFNULL( sum(Pembelian.JumlahPembelian), 0 ) - IFNULL( sum(Penjualan.JumlahPenjualan),0) as Stock, Pengguna.NamaPengguna as Pembeli
-            FROM Barang
-            left join Pembelian on Barang.idBarang = Pembelian.idBarang
-            left join Penjualan on Barang.idBarang = Penjualan.idBarang
-            left join Pengguna on Barang.idPengguna =  Pengguna.idPengguna
-            GROUP by Barang.idBarang;");
+            $result = mysqli_query($conn, "SELECT idPenjualan, JumlahPenjualan, HargaJual, Barang.NamaBarang  ,Pengguna.NamaPengguna, Pelanggan.NamaPelanggan from Penjualan
+            left join Pengguna on Penjualan.idPengguna  =  Pengguna.idPengguna
+            LEFT join Barang on Penjualan.idBarang  = Barang.idBarang 
+            left join Pelanggan on Penjualan.idPelanggan  = Pelanggan.idPelanggan;");
 
             if (mysqli_num_rows($result) > 0) {
                 while ($row = mysqli_fetch_assoc($result)) {
-                    $idBarang = $row["idBarang"];
+                    $idPenjualan = $row["idPenjualan"];
                     $NamaBarang = $row["NamaBarang"];
-                    $Stock = $row["Stock"];
-                    $keterangan = $row['Keterangan'];
-                    $pengguna = $row['Pembeli'];
+                    $HargaJual = $row["HargaJual"];
+                    $JumlahPenjualan = $row["JumlahPenjualan"];
+                    $NamaPengguna = $row['NamaPengguna'];
+                    $NamaPelanggan = $row["NamaPelanggan"];
                     echo  "<tr>
-                    <th>$idBarang</th>
+                    <th>$idPenjualan</th>
                     <td>$NamaBarang</td>
-                    <td>$keterangan</td>
-                    <td>$Stock</td>
-                    <td>$pengguna</td>
+                    <td>$JumlahPenjualan</td>
+                    <td>$HargaJual</td>
+                    <td>$NamaPengguna</td>
+                    <td>$NamaPelanggan</td>
                   </tr>";
                 }
             }

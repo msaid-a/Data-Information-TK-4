@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     
-    <title>Document</title>
+    <title>Supplier</title>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
@@ -25,41 +25,34 @@
   </div>
 </nav>
     <div class="px-4 mt-5">
-        <h2 class="text-center mb-4">Barang</h2>
+        <h2 class="text-center mb-4">Supplier</h2>
     <table class="table">
     <thead class="thead-dark">
     <tr>
-      <th scope="col">Id Barang</th>
-      <th scope="col">Nama Barang</th>
-      <th scope="col">Keterangan</th>
-      <th scope="col">Stock</th>
-      <th scope="col">Pembeli Barang</th>
+      <th scope="col">Id Supplier</th>
+      <th scope="col">Nama Supplier</th>
+      <th scope="col">Alamat</th>
+      <th scope="col">Nomor Handphone</th>
     </tr>
   </thead>
   <tbody>
 
         <?php 
             require 'connection.php';
-            $result = mysqli_query($conn, "SELECT Barang.idBarang, Barang.NamaBarang, Barang.Keterangan, IFNULL( sum(Pembelian.JumlahPembelian), 0 ) - IFNULL( sum(Penjualan.JumlahPenjualan),0) as Stock, Pengguna.NamaPengguna as Pembeli
-            FROM Barang
-            left join Pembelian on Barang.idBarang = Pembelian.idBarang
-            left join Penjualan on Barang.idBarang = Penjualan.idBarang
-            left join Pengguna on Barang.idPengguna =  Pengguna.idPengguna
-            GROUP by Barang.idBarang;");
+            $result = mysqli_query($conn, "SELECT * from Supplier ;");
 
             if (mysqli_num_rows($result) > 0) {
                 while ($row = mysqli_fetch_assoc($result)) {
-                    $idBarang = $row["idBarang"];
-                    $NamaBarang = $row["NamaBarang"];
-                    $Stock = $row["Stock"];
-                    $keterangan = $row['Keterangan'];
+                    $idSupplier = $row["IdSupplier"];
+                    $NamaSupplier = $row["NamaSupplier"];
+                    $AlamatSupplier = $row["AlamatSupplier"];
+                    $Phone = $row['Phone'];
                     $pengguna = $row['Pembeli'];
                     echo  "<tr>
-                    <th>$idBarang</th>
-                    <td>$NamaBarang</td>
-                    <td>$keterangan</td>
-                    <td>$Stock</td>
-                    <td>$pengguna</td>
+                    <th>$idSupplier</th>
+                    <td>$NamaSupplier</td>
+                    <td>$AlamatSupplier</td>
+                    <td>$Phone</td>
                   </tr>";
                 }
             }
