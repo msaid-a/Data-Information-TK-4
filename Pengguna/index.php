@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     
-    <title>Supplier</title>
+    <title>Pelanggan</title>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
@@ -22,38 +22,37 @@
       <a class="nav-item nav-link" href="/suplier.php">Suplier</a>
       <a class="nav-item nav-link" href="/pelanggan.php">Pelanggan</a>
       <a class="nav-item nav-link" href="/Pengguna/index.php">Pengguna</a>
+
     </div>
   </div>
 </nav>
     <div class="px-4 mt-5">
-        <h2 class="text-center mb-4">Supplier</h2>
+        <h2 class="text-center mb-4">Pengguna</h2>
     <table class="table">
     <thead class="thead-dark">
     <tr>
-      <th scope="col">Id Supplier</th>
-      <th scope="col">Nama Supplier</th>
+      <th scope="col">Id Pengguna</th>
+      <th scope="col">Nama Pengguna</th>
       <th scope="col">Alamat</th>
-      <th scope="col">Nomor Handphone</th>
+      <th scope="col">Hak Aksess</th>
     </tr>
   </thead>
   <tbody>
-
         <?php 
-            require 'connection.php';
-            $result = mysqli_query($conn, "SELECT * from Supplier ;");
+            require '../connection.php';
+            $result = mysqli_query($conn, "SELECT idPengguna, NamaPengguna, Alamat, HakAksess.NamaAksess  from Pengguna left join HakAksess on Pengguna.idAksess  = HakAksess.idHakAksess;");
 
             if (mysqli_num_rows($result) > 0) {
                 while ($row = mysqli_fetch_assoc($result)) {
-                    $idSupplier = $row["IdSupplier"];
-                    $NamaSupplier = $row["NamaSupplier"];
-                    $AlamatSupplier = $row["AlamatSupplier"];
-                    $Phone = $row['Phone'];
-                    $pengguna = $row['Pembeli'];
+                    $idPengguna = $row["idPengguna"];
+                    $NamaPengguna = $row["NamaPengguna"];
+                    $AlamatPengguna = $row["Alamat"];
+                    $HakAksess = $row['NamaAksess'];
                     echo  "<tr>
-                    <th>$idSupplier</th>
-                    <td>$NamaSupplier</td>
-                    <td>$AlamatSupplier</td>
-                    <td>$Phone</td>
+                    <th>$idPengguna</th>
+                    <td>$NamaPengguna</td>
+                    <td>$AlamatPengguna</td>
+                    <td>$HakAksess</td>
                   </tr>";
                 }
             }

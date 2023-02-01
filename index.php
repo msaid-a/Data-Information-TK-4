@@ -21,6 +21,7 @@
       <a class="nav-item nav-link" href="/hakAksess.php">HakAksess</a>
       <a class="nav-item nav-link" href="/suplier.php">Suplier</a>
       <a class="nav-item nav-link" href="/pelanggan.php">Pelanggan</a>
+      <a class="nav-item nav-link" href="/Pengguna/index.php">Pengguna</a>
     </div>
   </div>
 </nav>
